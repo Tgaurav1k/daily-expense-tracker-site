@@ -35,7 +35,7 @@
 html{scroll-behavior:smooth}
 body{margin:0; background:var(--cream); color:var(--body-fg);
   font-family:var(--font); line-height:1.65; -webkit-font-smoothing:antialiased}
-img{max-width:100%; display:block}
+img{max-width:100%; height:auto; display:block}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--violet); outline-offset:3px; border-radius:4px}
 .shell{max-width:1120px; margin:0 auto; padding:0 24px}
@@ -70,31 +70,23 @@ a{color:inherit}
 @media(max-width:400px){ .nav__wm i{display:none} }
 
 /* ── hero ── */
-.hero{position:relative; overflow:hidden; text-align:center;
+.hero{position:relative; overflow:hidden;
   background:
-    radial-gradient(760px 380px at 50% -10%, var(--violet-100), transparent 66%),
-    linear-gradient(180deg,#FAF5EC,var(--cream) 70%);
-  padding:58px 0 68px}
-.hero__mascot{position:relative; display:block; width:fit-content;
-  margin:0 auto 10px}
-.hero__mascot img{height:168px; width:auto; position:relative; z-index:2;
-  filter:drop-shadow(0 14px 26px rgba(28,26,36,.16))}
-.hero__mascot::before{content:""; position:absolute; left:50%; top:52%;
-  width:230px; height:230px; transform:translate(-50%,-50%);
-  background:radial-gradient(circle,var(--violet-100),transparent 68%);
-  border-radius:50%; z-index:1}
-@media(max-width:700px){ .hero__mascot img{height:124px} .hero__mascot::before{width:172px; height:172px} }
-
+    radial-gradient(820px 420px at 78% 4%, var(--violet-100), transparent 64%),
+    linear-gradient(180deg,#FAF5EC,var(--cream) 72%);
+  padding:70px 0 74px}
+.hero__in{display:grid; grid-template-columns:1.06fr .94fr; gap:44px; align-items:center}
+.hero__copy{min-width:0}
 .pill{display:inline-flex; align-items:center; gap:9px; background:var(--white);
   border:1px solid var(--line); color:var(--ink); font-size:13px; font-weight:600;
-  padding:7px 16px 7px 8px; border-radius:999px; margin-bottom:26px; box-shadow:var(--sh-sm)}
+  padding:7px 16px 7px 8px; border-radius:999px; margin-bottom:24px; box-shadow:var(--sh-sm)}
 .pill b{background:var(--violet); color:#fff; font-size:10.5px; font-weight:800;
   letter-spacing:.6px; padding:4px 9px; border-radius:999px}
-.hero h1{font-size:clamp(36px,5.2vw,60px); font-weight:800; line-height:1.07;
-  letter-spacing:-2px; color:var(--ink); margin:0 auto 22px; max-width:15ch}
+.hero h1{font-size:clamp(36px,4.9vw,58px); font-weight:800; line-height:1.07;
+  letter-spacing:-2px; color:var(--ink); margin:0 0 20px}
 .hero h1 em{font-style:normal; color:var(--violet)}
-.hero__sub{font-size:18.5px; color:var(--muted); max-width:34em; margin:0 auto 34px}
-.hero__cta{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
+.hero__sub{font-size:18px; color:var(--muted); max-width:33em; margin:0 0 30px}
+.hero__cta{display:flex; gap:12px; flex-wrap:wrap}
 .btn{display:inline-flex; align-items:center; gap:9px; text-decoration:none;
   font-weight:700; font-size:16px; line-height:1; padding:18px 30px; border-radius:12px;
   border:1px solid transparent; transition:all .16s ease}
@@ -104,19 +96,52 @@ a{color:inherit}
 .btn--alt:hover{border-color:var(--violet-100); transform:translateY(-2px)}
 .hero__free{margin:20px 0 0; font-size:13.5px; color:var(--muted)}
 
+.hero__art{position:relative; display:grid; place-items:center; min-width:0}
+.hero__art::before{content:""; position:absolute; width:86%; aspect-ratio:1;
+  background:radial-gradient(circle,var(--violet-100),transparent 66%); border-radius:50%}
+.hero__art img{position:relative; z-index:2; width:min(430px,100%);
+  filter:drop-shadow(0 20px 38px rgba(28,26,36,.16)); animation:bob 6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)}}
+@media(max-width:940px){
+  .hero{padding:48px 0 56px}
+  .hero__in{grid-template-columns:1fr; gap:18px; text-align:center}
+  .hero__sub{margin-left:auto; margin-right:auto}
+  .hero__cta{justify-content:center}
+  .hero__art{order:-1}
+  .hero__art img{width:min(290px,76%)}
+}
+
 /* ── screenshot rail ── */
-.rail{padding:10px 0 86px; background:var(--cream)}
-.rail__scroll{display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory;
-  padding:16px 24px 26px; margin:0 -24px; -webkit-overflow-scrolling:touch}
+.rail{padding:8px 0 84px; background:var(--cream)}
+.rail__top{display:flex; align-items:flex-end; gap:16px; margin-bottom:18px}
+.rail__top h2{font-size:clamp(22px,2.6vw,30px); font-weight:800; letter-spacing:-.8px;
+  color:var(--ink); margin:0}
+.rail__top p{margin:4px 0 0; color:var(--muted); font-size:15px}
+.rail__nav{margin-left:auto; display:flex; gap:9px; flex-shrink:0}
+.rail__btn{width:42px; height:42px; border-radius:50%; border:1px solid var(--line);
+  background:var(--white); color:var(--ink); display:grid; place-items:center;
+  cursor:pointer; box-shadow:var(--sh-sm); transition:all .15s ease}
+.rail__btn:hover:not(:disabled){border-color:var(--violet); color:var(--violet-dk); transform:translateY(-2px)}
+.rail__btn:disabled{opacity:.34; cursor:default}
+.rail__btn svg{width:17px; height:17px; stroke:currentColor; fill:none;
+  stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+@media(max-width:700px){ .rail__nav{display:none} }
+
+.rail__scroll{display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
+  padding:6px 24px 24px; margin:0 -24px; scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch; scrollbar-width:thin}
 .rail__scroll::-webkit-scrollbar{height:7px}
-.rail__scroll::-webkit-scrollbar-thumb{background:#DACFBE; border-radius:99px}
+.rail__scroll::-webkit-scrollbar-thumb{background:#DDD2C0; border-radius:99px}
 .rail__scroll::-webkit-scrollbar-track{background:transparent}
-.shot{flex:0 0 288px; scroll-snap-align:center; border-radius:20px; overflow:hidden;
-  border:1px solid var(--line); box-shadow:var(--sh-md); background:var(--white);
-  transition:transform .2s ease}
-.shot:hover{transform:translateY(-6px)}
-.rail__hint{text-align:center; font-size:13px; color:var(--muted); margin:0}
-@media(max-width:620px){ .shot{flex-basis:238px} }
+.shot{flex:0 0 262px; scroll-snap-align:center; border-radius:20px; overflow:hidden;
+  border:1px solid var(--line); box-shadow:var(--sh-sm); background:var(--white);
+  transition:transform .2s ease, box-shadow .2s ease}
+.shot:hover{transform:translateY(-6px); box-shadow:var(--sh-md)}
+@media(max-width:620px){ .shot{flex-basis:216px} }
+
+/* scroll reveal */
+.reveal{opacity:0; transform:translateY(18px); transition:opacity .55s ease, transform .55s ease}
+.reveal.in{opacity:1; transform:none}
 
 /* ── sections ── */
 .sec{padding:88px 0}
@@ -245,28 +270,47 @@ a{color:inherit}
 </header>
 
 <section class="hero">
-  <div class="shell">
-    <span class="hero__mascot"><img src="assets/hero-buddha.png" alt="" /></span>
-    <span class="pill"><b>FREE</b> On Google Play, no card needed</span>
-    <h1>Your phone already knows <em>what you spent.</em></h1>
-    <p class="hero__sub">
-      Every payment you make sends a notification. This app reads them, sorts them into
-      categories and keeps the running total — so the one thing you never do is type
-      an expense in.
-    </p>
-    <div class="hero__cta">
-      <a class="btn btn--go" href="https://play.google.com/store/apps/details?id=in.dailyexpensetracker.app">
-        Get it on Google Play
-      </a>
-      <a class="btn btn--alt" href="#how">See how it works</a>
+  <div class="shell hero__in">
+    <div class="hero__copy">
+      <span class="pill"><b>FREE</b> On Google Play, no card needed</span>
+      <h1>Your phone already knows <em>what you spent.</em></h1>
+      <p class="hero__sub">
+        Every payment sends a notification. The app reads them, sorts them into
+        categories and keeps your running total — so the one thing you never do
+        is type an expense in.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--go" href="https://play.google.com/store/apps/details?id=in.dailyexpensetracker.app">
+          Get it on Google Play
+        </a>
+        <a class="btn btn--alt" href="#how">See how it works</a>
+      </div>
+      <p class="hero__free">Free to use. Premium is ₹10 a month, and optional.</p>
     </div>
-    <p class="hero__free">Free to use. Premium is ₹10 a month, and optional.</p>
+    <div class="hero__art">
+      <img src="assets/hero-relax.png" width="620" height="636"
+           alt="The app's mascot relaxing in a deck chair with a drink" />
+    </div>
   </div>
 </section>
 
 <div class="rail">
   <div class="shell">
-    <div class="rail__scroll">
+    <div class="rail__top">
+      <div>
+        <h2>See it on a real phone</h2>
+        <p>Five things the app does that you do not have to.</p>
+      </div>
+      <div class="rail__nav">
+        <button class="rail__btn" id="railPrev" type="button" aria-label="Previous screenshots">
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="rail__btn" id="railNext" type="button" aria-label="Next screenshots">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="rail__scroll" id="rail">
       <img class="shot" src="assets/shot-1.jpg" width="720" height="1280" loading="lazy"
            alt="Track every rupee automatically — payments are picked up from your notifications and saved for you." />
       <img class="shot" src="assets/shot-5.jpg" width="720" height="1280" loading="lazy"
@@ -278,7 +322,6 @@ a{color:inherit}
       <img class="shot" src="assets/shot-3.jpg" width="720" height="1280" loading="lazy"
            alt="Make it yours with 29 themes — glass, neo brutal, clay, AMOLED black and more." />
     </div>
-    <p class="rail__hint">Scroll for more →</p>
   </div>
 </div>
 
@@ -292,7 +335,7 @@ a{color:inherit}
     </div>
 
     <div class="grid">
-      <article class="tile tile--wide">
+      <article class="tile tile--wide reveal">
         <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
         <h3>It reads the notification</h3>
         <p>When your bank or UPI app tells you a payment went through, the app picks out
@@ -301,7 +344,7 @@ a{color:inherit}
         <span class="tile__tag">India only, for now</span>
       </article>
 
-      <article class="tile tile--wide">
+      <article class="tile tile--wide reveal">
         <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
         <h3>Or it reads the receipt</h3>
         <p>Point the camera at a paper bill, or share a payment screenshot from any app.
@@ -309,21 +352,21 @@ a{color:inherit}
         <span class="tile__tag">India only, for now</span>
       </article>
 
-      <article class="tile">
+      <article class="tile reveal">
         <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
         <h3>Splits that settle</h3>
         <p>A trip, a flat, a dinner. One running total everyone can see, and a shared
            family budget if you want one.</p>
       </article>
 
-      <article class="tile">
+      <article class="tile reveal">
         <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span>
         <h3>Fourteen charts</h3>
         <p>Trends, pie charts, a spending calendar, weekdays, top payees. Switch on only
            the ones you actually look at.</p>
       </article>
 
-      <article class="tile">
+      <article class="tile reveal">
         <span class="tile__ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18"/><circle cx="15.5" cy="9" r="1.2"/><circle cx="15.5" cy="15" r="1.2"/></svg></span>
         <h3>Twenty-nine themes</h3>
         <p>Glass, neo brutal, clay, AMOLED black, anime looks and more. Switch in one tap.</p>
@@ -342,7 +385,7 @@ a{color:inherit}
     </div>
 
     <div class="plans">
-      <div class="plan">
+      <div class="plan reveal">
         <p class="plan__name">Free</p>
         <div class="plan__price">₹0</div>
         <ul>
@@ -356,7 +399,7 @@ a{color:inherit}
         </ul>
       </div>
 
-      <div class="plan plan--pro">
+      <div class="plan plan--pro reveal">
         <span class="plan__flag">Premium</span>
         <p class="plan__name">Premium</p>
         <div class="plan__price">₹10 <small>/ month</small></div>
@@ -479,5 +522,47 @@ a{color:inherit}
   </div>
 </footer>
 
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // screenshot rail arrows
+  var rail = document.getElementById('rail'),
+      prev = document.getElementById('railPrev'),
+      next = document.getElementById('railNext');
+  if (rail && prev && next) {
+    function step(){
+      var card = rail.querySelector('.shot');
+      return card ? card.getBoundingClientRect().width + 18 : 280;
+    }
+    function sync(){
+      prev.disabled = rail.scrollLeft < 8;
+      next.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
+    }
+    prev.addEventListener('click', function(){ rail.scrollBy({left:-step()*2, behavior: reduce?'auto':'smooth'}); });
+    next.addEventListener('click', function(){ rail.scrollBy({left: step()*2, behavior: reduce?'auto':'smooth'}); });
+    rail.addEventListener('scroll', sync, {passive:true});
+    window.addEventListener('resize', sync);
+    sync();
+  }
+
+  // reveal on scroll
+  var items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -12% 0px'});
+    items.forEach(function(el, i){
+      el.style.transitionDelay = (i % 4) * 70 + 'ms';
+      io.observe(el);
+    });
+  }
+})();
+</script>
 </body>
 </html>
