@@ -154,24 +154,65 @@ a{color:inherit}
   color:var(--violet-dk); background:var(--violet-50); border:1px solid var(--violet-100);
   padding:5px 13px; border-radius:999px; margin-bottom:16px}
 
-.grid{display:grid; grid-template-columns:repeat(6,1fr); gap:18px}
-.tile{grid-column:span 2; background:var(--white); border:1px solid var(--line);
-  border-radius:18px; padding:28px 26px; box-shadow:var(--sh-sm);
-  transition:transform .18s ease, box-shadow .18s ease}
-.tile:hover{transform:translateY(-4px); box-shadow:var(--sh-md)}
-.tile--wide{grid-column:span 3}
-.tile__ico{width:44px; height:44px; border-radius:12px; display:grid; place-items:center;
-  background:var(--violet-50); border:1px solid var(--violet-100); color:var(--violet-dk);
-  margin-bottom:18px}
-.tile__ico svg{width:20px; height:20px; stroke:currentColor; fill:none;
-  stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
-.tile h3{font-size:18px; font-weight:700; letter-spacing:-.3px; margin:0 0 8px; color:var(--ink)}
-.tile p{margin:0; color:var(--muted); font-size:14.5px}
-.tile__tag{display:inline-block; margin-top:16px; font-size:10.5px; font-weight:700;
-  letter-spacing:.7px; text-transform:uppercase; padding:4px 10px; border-radius:6px;
+/* how it works */
+.hiw{display:grid; grid-template-columns:1.25fr 1fr; gap:18px; margin-bottom:18px}
+.hiw__card{position:relative; background:var(--white); border:1px solid var(--line);
+  border-radius:20px; padding:30px 28px; overflow:hidden;
+  transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, border-color .22s ease;
+  box-shadow:var(--sh-sm)}
+.hiw__card:hover{transform:translateY(-5px); box-shadow:var(--sh-md); border-color:var(--violet-100)}
+.hiw__col{display:grid; gap:18px}
+.hiw__num{font-size:12px; font-weight:800; letter-spacing:1.6px; color:var(--violet);
+  display:block; margin-bottom:12px}
+.hiw__card h3{font-size:21px; font-weight:800; letter-spacing:-.5px; margin:0 0 9px; color:var(--ink)}
+.hiw__card p{margin:0; color:var(--muted); font-size:15px; max-width:34em}
+.hiw__tag{display:inline-block; margin-top:16px; font-size:10.5px; font-weight:700;
+  letter-spacing:.7px; text-transform:uppercase; padding:5px 11px; border-radius:6px;
   background:var(--cream); color:var(--muted); border:1px solid var(--line)}
-@media(max-width:900px){ .grid{grid-template-columns:repeat(2,1fr)} .tile,.tile--wide{grid-column:span 1} }
-@media(max-width:560px){ .grid{grid-template-columns:1fr} }
+
+/* the live loop inside card 01 */
+.loop{margin-top:22px; height:112px; position:relative}
+.loop__row{position:absolute; left:0; right:0; display:flex; align-items:center; gap:11px;
+  background:var(--cream-lt); border:1px solid var(--line); border-radius:12px; padding:11px 14px}
+.loop__row--note{top:0; animation:noteIn 5.2s ease-in-out infinite}
+.loop__row--exp{bottom:0; animation:expIn 5.2s ease-in-out infinite}
+.loop__ico{width:28px; height:28px; border-radius:8px; flex-shrink:0; display:grid;
+  place-items:center; font-size:13px; font-weight:800; color:#fff; background:var(--violet)}
+.loop__row--exp .loop__ico{background:#19B46B}
+.loop__t{display:flex; flex-direction:column; line-height:1.25; min-width:0}
+.loop__t b{font-size:13.5px; font-weight:700; color:var(--ink)}
+.loop__t span{font-size:11px; color:var(--muted)}
+.loop__amt{margin-left:auto; font-size:14px; font-weight:800; color:var(--ink)}
+.loop__arrow{position:absolute; left:22px; top:50%; transform:translateY(-50%);
+  color:var(--violet); opacity:.5}
+.loop__arrow svg{width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2.4;
+  stroke-linecap:round; stroke-linejoin:round}
+@keyframes noteIn{
+  0%{opacity:0; transform:translateX(-14px)} 12%,46%{opacity:1; transform:none}
+  62%,100%{opacity:0; transform:translateX(-14px)}
+}
+@keyframes expIn{
+  0%,38%{opacity:0; transform:translateY(10px) scale(.97)}
+  54%,88%{opacity:1; transform:none} 100%{opacity:0; transform:translateY(10px) scale(.97)}
+}
+
+/* payoff stats */
+.payoff{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.stat{background:var(--white); border:1px solid var(--line); border-radius:20px;
+  padding:28px 26px; box-shadow:var(--sh-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, border-color .22s ease}
+.stat:hover{transform:translateY(-5px); box-shadow:var(--sh-md); border-color:var(--violet-100)}
+.stat__n{font-size:46px; font-weight:800; letter-spacing:-2.2px; line-height:1;
+  color:var(--violet); margin-bottom:10px}
+.stat h3{font-size:18px; font-weight:800; letter-spacing:-.3px; margin:0 0 7px; color:var(--ink)}
+.stat p{margin:0; color:var(--muted); font-size:14.5px}
+.stat__ico svg{width:40px; height:40px; stroke:var(--violet); fill:none; stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round; margin-bottom:12px}
+
+@media(max-width:900px){
+  .hiw{grid-template-columns:1fr}
+  .payoff{grid-template-columns:1fr}
+}
 
 /* ── pricing ── */
 .plans{display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:800px}
@@ -244,6 +285,10 @@ a{color:inherit}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
+  .loop__row{animation:none!important; opacity:1!important; transform:none!important}
+  .loop{height:auto; display:grid; gap:10px}
+  .loop__row{position:static}
+  .loop__arrow{display:none}
   .rail__scroll{scroll-snap-type:none}
   *{transition:none!important}
 }
@@ -332,46 +377,65 @@ a{color:inherit}
   <div class="shell">
     <div class="sec__head">
       <span class="kicker">How it works</span>
-      <h2>Stop doing data entry on your own life.</h2>
+      <h2>Three ways in. You pick how little you do.</h2>
       <p>Most expense apps die the week you stop typing into them. This one keeps going
          because it never needed you to type.</p>
     </div>
 
-    <div class="grid">
-      <article class="tile tile--wide reveal">
-        <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+    <div class="hiw">
+      <article class="hiw__card reveal">
+        <span class="hiw__num">01 — AUTOMATIC</span>
         <h3>It reads the notification</h3>
-        <p>When your bank or UPI app tells you a payment went through, the app picks out
-           the amount and the merchant and files it under a category. You glance and
-           confirm. That's the whole loop.</p>
-        <span class="tile__tag">India only, for now</span>
+        <p>Your bank or UPI app says a payment went through. The app takes the amount
+           and the merchant from that and files it. You glance and confirm.</p>
+        <div class="loop" aria-hidden="true">
+          <div class="loop__row loop__row--note">
+            <span class="loop__ico">₹</span>
+            <span class="loop__t"><b>Paid ₹250 to Corner Cafe</b><span>UPI app · now</span></span>
+          </div>
+          <span class="loop__arrow"><svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg></span>
+          <div class="loop__row loop__row--exp">
+            <span class="loop__ico">✓</span>
+            <span class="loop__t"><b>Corner Cafe</b><span>Food · logged</span></span>
+            <span class="loop__amt">₹250</span>
+          </div>
+        </div>
+        <span class="hiw__tag">India only, for now</span>
       </article>
 
-      <article class="tile tile--wide reveal">
-        <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
-        <h3>Or it reads the receipt</h3>
-        <p>Point the camera at a paper bill, or share a payment screenshot from any app.
-           The amount, payee and date are filled in for you.</p>
-        <span class="tile__tag">India only, for now</span>
-      </article>
+      <div class="hiw__col">
+        <article class="hiw__card reveal">
+          <span class="hiw__num">02 — A PICTURE</span>
+          <h3>Or it reads the receipt</h3>
+          <p>Point the camera at a paper bill, or share a payment screenshot from any app.
+             Amount, payee and date fill themselves in.</p>
+          <span class="hiw__tag">India only, for now</span>
+        </article>
 
-      <article class="tile reveal">
-        <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <article class="hiw__card reveal">
+          <span class="hiw__num">03 — BY HAND</span>
+          <h3>Or you just add it</h3>
+          <p>Two taps and your own categories. This one works in every country the app does.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="payoff">
+      <article class="stat reveal">
+        <span class="stat__ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
         <h3>Splits that settle</h3>
         <p>A trip, a flat, a dinner. One running total everyone can see, and a shared
            family budget if you want one.</p>
       </article>
-
-      <article class="tile reveal">
-        <span class="tile__ico"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span>
-        <h3>Fourteen charts</h3>
+      <article class="stat reveal">
+        <div class="stat__n" data-count="14">14</div>
+        <h3>Charts, your way</h3>
         <p>Trends, pie charts, a spending calendar, weekdays, top payees. Switch on only
-           the ones you actually look at.</p>
+           the ones you look at.</p>
       </article>
-
-      <article class="tile reveal">
-        <span class="tile__ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18"/><circle cx="15.5" cy="9" r="1.2"/><circle cx="15.5" cy="15" r="1.2"/></svg></span>
-        <h3>Twenty-nine themes</h3>
+      <article class="stat reveal">
+        <div class="stat__n" data-count="29">29</div>
+        <h3>Themes</h3>
         <p>Glass, neo brutal, clay, AMOLED black, anime looks and more. Switch in one tap.</p>
       </article>
     </div>
@@ -588,14 +652,35 @@ a{color:inherit}
     if (!reduce) start(); else stop();
   }
 
+  // count the real numbers up when they scroll in
+  function countUp(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    if (reduce || !target){ el.textContent = target || el.textContent; return; }
+    var t0 = null, DUR = 900;
+    el.textContent = '0';
+    requestAnimationFrame(function frame(ts){
+      if (!t0) t0 = ts;
+      var k = Math.min((ts - t0) / DUR, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(frame);
+    });
+  }
+
   // reveal on scroll
   var items = document.querySelectorAll('.reveal');
   if (reduce || !('IntersectionObserver' in window)) {
-    items.forEach(function(el){ el.classList.add('in'); });
+    items.forEach(function(el){
+      el.classList.add('in');
+      var n = el.querySelector('[data-count]'); if (n) countUp(n);
+    });
   } else {
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
-        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          var n = e.target.querySelector('[data-count]'); if (n) countUp(n);
+          io.unobserve(e.target);
+        }
       });
     }, {rootMargin:'0px 0px -12% 0px'});
     items.forEach(function(el, i){
