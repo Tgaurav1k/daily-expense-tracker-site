@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Daily Expense Tracker</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+      line-height: 1.6;
+    }
+    h1 { color: #6C63FF; margin-bottom: 4px; }
+    h2 { color: #333; margin-top: 32px; }
+    h3 { color: #444; margin-top: 20px; }
+    .muted { color: #666; font-size: 14px; }
+    code { background: #f3f3f7; padding: 2px 6px; border-radius: 4px; }
+    a { color: #6C63FF; }
+    ul { padding-left: 1.25rem; }
+  </style>
+</head>
+<body>
+
+<h1>Privacy Policy</h1>
+<p class="muted">Daily Expense Tracker &middot; Last updated: 6 July 2026</p>
+
+<p>
+  This Privacy Policy explains how the <strong>Daily Expense Tracker</strong> mobile
+  application (package <code>in.dailyexpensetracker.app</code>)
+  collects, uses, and safeguards your information. By using the app you agree to
+  the practices described here.
+</p>
+
+<h2>1. Summary in plain words</h2>
+<ul>
+  <li>Your <strong>transactions, budgets, invoices, day notes, per-transaction notes, and analytics</strong> are stored <strong>on your device</strong> in a local database. We do not upload your personal ledger to our servers.</li>
+  <li>With your permission, the app reads <strong>transaction notifications</strong> from a fixed list of banking and UPI apps (and Truecaller smart-SMS cards) — only on your phone, only to detect payments for your own ledger. We do <strong>not</strong> use the READ_SMS or RECEIVE_SMS permissions and do not read your SMS inbox.</li>
+  <li>When you sign in, we store your <strong>name, email, and phone number</strong> on our secure backend so we can verify your account and power shared bill features.</li>
+  <li><strong>Split bills, group splits (trips/parties), and their chat messages</strong> are stored on our backend so the other participants can see them.</li>
+  <li>We do not sell your data. Google AdMob may collect advertising identifiers when ads are shown.</li>
+</ul>
+
+<h2>2. Information we collect</h2>
+
+<h3>2.1 Information you provide</h3>
+<ul>
+  <li><strong>Name, email address, phone number</strong> — entered at sign-up. Sent to our backend for account verification (one-time email OTP) and for matching shared bills by phone number. A copy of your profile is also stored locally on your device.</li>
+  <li><strong>Profile photo</strong> (optional) — stored locally on your device only (base64 in the local database).</li>
+  <li><strong>Transactions, budgets, recurring payments, invoices, day notes, per-transaction notes, custom categories</strong> — stored locally on your device only.</li>
+  <li><strong>Split bills and split chat messages</strong> — when you create or join a split, the split title, amounts, member names, phone numbers, and 1:1 chat messages are stored on our backend so the participants can see them in their app.</li>
+  <li><strong>Group splits and group chat</strong> — when you create or join a group (for a trip, party, etc.), the group name, budget, category, member names and phone numbers, the expenses each member logs (payer, amount, and note), and the group chat messages are stored on our backend so all members can see and settle up.</li>
+  <li><strong>Feedback</strong> — if you use <em>Profile &rarr; Send Feedback</em>, the message and star rating you submit, together with your name, email, phone number, and the app version, are sent to the developer by email so we can respond and improve the app.</li>
+</ul>
+
+<h3>2.2 Information accessed via Android permissions</h3>
+<ul>
+  <li>
+    <strong>Notification Access</strong> (<code>BIND_NOTIFICATION_LISTENER_SERVICE</code>) &mdash;
+    a special-access permission you grant manually from
+    <em>Settings &rarr; Apps &rarr; Special access &rarr; Notification access</em>.
+    When granted, the app reads <strong>only payment / transaction notifications</strong> posted by
+    banking and UPI apps you use (for example Google Pay, PhonePe, Paytm, BHIM, SBI,
+    HDFC, ICICI, Axis, Amazon Pay, and similar apps on our allowlist) and, if installed,
+    <strong>Truecaller smart-SMS summary cards</strong> (payment summaries Truecaller
+    posts as its own notifications — not your SMS inbox).
+    Content is parsed <em>entirely on your device</em> to record your expenses, and is
+    <strong>never transmitted to us or used for advertising</strong>. Notifications from
+    messaging and social apps (WhatsApp, Telegram, Instagram, etc.) are ignored. You can
+    use the app without this permission via manual entry and screenshot OCR. Revoke anytime
+    from the same Settings screen.
+    <strong>This app does not request READ_SMS or RECEIVE_SMS.</strong>
+  </li>
+  <li>
+    <strong>Camera</strong> — used only when you choose to take a profile photo or capture a
+    receipt. Images are processed/stored locally and not uploaded to our servers.
+  </li>
+  <li>
+    <strong>Photos / Media (READ_MEDIA_IMAGES)</strong> — used when you pick a profile
+    photo, receipt image, bank statement PDF, or payment screenshot from your gallery.
+    The app accesses only files you explicitly select. Screenshot OCR runs on-device.
+  </li>
+  <li>
+    <strong>Biometric (USE_BIOMETRIC, USE_FINGERPRINT)</strong> — optional App Lock.
+    Matching is handled by Android; we never receive your fingerprint or face data.
+  </li>
+  <li>
+    <strong>Notifications (POST_NOTIFICATIONS)</strong> — daily digests, budget alerts,
+    transaction confirmations, and split / group updates you have enabled.
+  </li>
+  <li>
+    <strong>Exact alarms (SCHEDULE_EXACT_ALARM)</strong> — delivers scheduled local
+    reminders (daily digest, recurring payment reminders) at the times you choose.
+    You may grant this from system Alarms &amp; Reminders settings on Android 12+.
+  </li>
+  <li>
+    <strong>Boot receiver (RECEIVE_BOOT_COMPLETED), Foreground service
+    (FOREGROUND_SERVICE, FOREGROUND_SERVICE_SPECIAL_USE)</strong>
+    — re-arms scheduled local notifications and keeps the notification listener
+    running after reboot when Auto-detect is ON, so transaction detection continues
+    on aggressive OEM devices.
+  </li>
+  <li>
+    <strong>Internet</strong> — account sign-in (OTP email), split &amp; group bill and chat
+    sync, real-time split / group notifications (Socket.IO), feedback email, and Google AdMob ads.
+  </li>
+</ul>
+
+<h3>2.3 Information collected automatically</h3>
+<ul>
+  <li>
+    <strong>Session token (JWT)</strong> — stored in the Android Keystore after sign-in
+    so API calls to our backend are authenticated. Cleared on logout or account deletion.
+  </li>
+  <li>
+    <strong>Advertising identifier &amp; ad-related data</strong> — Google AdMob collects
+    an Android Advertising ID, approximate location from IP, device model, and similar
+    data to show ads. Governed by
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google&rsquo;s Privacy Policy</a>.
+    You can limit ad personalization in your device&rsquo;s Ad Settings.
+  </li>
+</ul>
+
+<h2>3. How we use information</h2>
+<ul>
+  <li>To verify your account via a one-time email code at sign-up.</li>
+  <li>To populate your <strong>local</strong> ledger from notifications, screenshots, bank-statement imports, or manual entry.</li>
+  <li>To sync split bills, group splits, and chat between the participants who share them.</li>
+  <li>To deliver budget alerts, daily digests, and split / group notifications you have enabled.</li>
+  <li>To respond to and act on feedback you send us.</li>
+  <li>To display ads through Google AdMob.</li>
+</ul>
+
+<h2>4. Data storage and retention</h2>
+<p>
+  <strong>On your device:</strong> transactions, budgets, recurring payments, invoices,
+  day notes, per-transaction notes, profile photo, analytics, and most settings live in a
+  local SQLite database.
+</p>
+<p>
+  <strong>On our servers:</strong> account credentials (email, name, phone); split-bill
+  records and split chat messages; group splits (name, budget, category, members, expenses)
+  and group chat messages; and the in-app notification feed for split / group events.
+  We do <strong>not</strong> store your personal transaction ledger on our servers.
+</p>
+<p>
+  Delete your account from <strong>Profile &rarr; Delete Account</strong> to remove your
+  server-side account and wipe local data. Uninstalling the app also removes on-device data.
+</p>
+
+<h2>5. Sharing of information</h2>
+<p>We do not sell or rent your personal information. We share data only with:</p>
+<ul>
+  <li>
+    Our transactional email provider — solely to deliver the one-time verification code and,
+    when you submit feedback, to deliver your feedback email to the developer.
+  </li>
+  <li>
+    Other split and group participants — the split / group title, amounts, expenses, and the
+    names/phone numbers you enter (so everyone can see and settle up in their app).
+  </li>
+  <li>
+    Google AdMob — advertising identifiers as described in Section 2.3.
+  </li>
+  <li>
+    Authorities — where required by applicable law.
+  </li>
+</ul>
+
+<h2>6. Children</h2>
+<p>
+  Daily Expense Tracker is not directed at children under 13. We do not knowingly collect
+  personal information from children. Contact us to request deletion if you believe a child
+  has provided information.
+</p>
+
+<h2>7. Your choices</h2>
+<ul>
+  <li>Deny or revoke Android permissions (including Notification Access) from system settings.</li>
+  <li>Turn Auto-detect OFF in Profile without revoking OS permission.</li>
+  <li>Opt out of personalized ads in your device Ad Settings.</li>
+  <li>Leave or delete a split / group to stop sharing that data with its participants.</li>
+  <li>Delete your account and all local data from Profile &rarr; Delete Account.</li>
+</ul>
+
+<h2>8. Security</h2>
+<p>
+  Local data is protected by Android sandboxing. Optional App Lock adds biometric
+  authentication. Network calls use HTTPS. Session tokens are stored in the Android Keystore.
+</p>
+
+<h2>9. Changes to this policy</h2>
+<p>
+  We may update this policy. The &ldquo;Last updated&rdquo; date at the top reflects the
+  latest revision. Continued use after a change constitutes acceptance.
+</p>
+
+<h2>10. Contact</h2>
+<p>
+  Questions or requests? Email:<br />
+  <a href="mailto:automationbuddy1k@gmail.com">automationbuddy1k@gmail.com</a>
+</p>
+
+</body>
+</html>

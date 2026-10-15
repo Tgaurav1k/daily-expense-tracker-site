@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Daily Expense Tracker &amp; Budget</title>
+<meta name="description" content="A calm expense tracker that logs your spending from payment notifications, splits bills with friends, and shows you where the money actually goes." />
+<link rel="icon" href="assets/icon.png" />
+<meta property="og:title" content="Daily Expense Tracker &amp; Budget" />
+<meta property="og:description" content="Know where your money goes, without the spreadsheet." />
+<meta property="og:image" content="assets/icon.png" />
+<style>
+  :root{
+    --cream:#FFF7E8; --peach:#FFD6B0; --saffron:#F28C28; --ink:#2A1A0E;
+    --indigo:#6C63FF; --indigo-dk:#4A42D9; --green:#22C55E;
+    --paper:#FFFDF8; --line:#E8DCC8; --muted:#7A6652;
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%}
+  a{color:var(--indigo-dk)}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 20px}
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky; top:0; z-index:20; backdrop-filter:blur(10px);
+    background:rgba(255,247,232,.82); border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top,0px);
+  }
+  .bar{display:flex; align-items:center; gap:12px; padding:12px 0}
+  .bar img{width:34px; height:34px; border-radius:9px}
+  .bar strong{font-size:16px; letter-spacing:-.2px}
+  .bar nav{margin-left:auto; display:flex; gap:20px; font-size:14px; font-weight:600}
+  .bar nav a{color:var(--muted); text-decoration:none}
+  .bar nav a:hover{color:var(--ink)}
+  @media(max-width:640px){ .bar nav{display:none} }
+
+  /* ---------- hero ---------- */
+  .hero{padding:68px 0 48px; display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center}
+  @media(max-width:860px){ .hero{grid-template-columns:1fr; padding:44px 0 32px; text-align:left} }
+  .eyebrow{
+    display:inline-block; background:var(--peach); color:#8A4B12;
+    font-size:12.5px; font-weight:800; letter-spacing:.6px; text-transform:uppercase;
+    padding:6px 12px; border-radius:999px; margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(34px,5.4vw,56px); line-height:1.08; margin:0 0 18px;
+    letter-spacing:-1.4px; font-weight:800;
+  }
+  h1 .hl{
+    background:linear-gradient(180deg,transparent 62%,var(--peach) 62%);
+    padding:0 4px;
+  }
+  .sub{font-size:18px; color:var(--muted); max-width:30em; margin:0 0 28px}
+  .cta{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+    background:var(--ink); color:var(--cream); font-weight:700; font-size:15px;
+    padding:14px 22px; border-radius:999px; border:2px solid var(--ink);
+    transition:transform .12s ease;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn.ghost{background:transparent; color:var(--ink)}
+  .hero-art{position:relative; text-align:center}
+  .hero-art img{width:min(300px,78%); filter:drop-shadow(0 18px 30px rgba(42,26,14,.18))}
+  .blob{
+    position:absolute; inset:14% 8% 10% 8%; background:var(--peach);
+    border-radius:48% 52% 44% 56%/52% 44% 56% 48%; opacity:.55; z-index:-1;
+  }
+
+  /* ---------- strip ---------- */
+  .strip{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--paper); padding:18px 0;
+  }
+  .strip .wrap{display:flex; gap:28px; flex-wrap:wrap; justify-content:center;
+    font-size:14px; font-weight:600; color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:66px 0}
+  h2{font-size:clamp(25px,3.4vw,34px); letter-spacing:-.8px; margin:0 0 10px; font-weight:800}
+  .lede{color:var(--muted); max-width:34em; margin:0 0 34px; font-size:16.5px}
+
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  @media(max-width:860px){ .grid{grid-template-columns:1fr} }
+  .card{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:24px 22px;
+  }
+  .card .ico{font-size:24px; display:block; margin-bottom:12px}
+  .card h3{margin:0 0 7px; font-size:17px; letter-spacing:-.2px}
+  .card p{margin:0; color:var(--muted); font-size:14.5px}
+  .tag{
+    display:inline-block; margin-top:12px; font-size:11.5px; font-weight:800;
+    letter-spacing:.4px; text-transform:uppercase; padding:4px 9px; border-radius:999px;
+    background:#FFF0DC; color:#8A4B12;
+  }
+
+  /* ---------- pricing ---------- */
+  #pricing{background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .plans{display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:760px}
+  @media(max-width:760px){ .plans{grid-template-columns:1fr} }
+  .plan{background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:28px 24px}
+  .plan.pro{border:2px solid var(--ink); position:relative}
+  .plan .badge{
+    position:absolute; top:-12px; right:20px; background:var(--ink); color:var(--cream);
+    font-size:11.5px; font-weight:800; letter-spacing:.5px; padding:5px 12px; border-radius:999px;
+  }
+  .price{font-size:42px; font-weight:800; letter-spacing:-1.6px; margin:6px 0 2px}
+  .price small{font-size:15px; font-weight:600; color:var(--muted); letter-spacing:0}
+  .plan ul{list-style:none; padding:0; margin:18px 0 0}
+  .plan li{padding:7px 0 7px 26px; position:relative; font-size:14.5px}
+  .plan li::before{content:"✓"; position:absolute; left:0; color:var(--green); font-weight:800}
+  .plan li.off{color:var(--muted)}
+  .plan li.off::before{content:"—"; color:var(--muted)}
+  .note{margin-top:18px; font-size:13.5px; color:var(--muted); max-width:44em}
+
+  /* ---------- faq ---------- */
+  details{
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:16px 18px; margin-bottom:10px;
+  }
+  details[open]{border-color:var(--saffron)}
+  summary{cursor:pointer; font-weight:700; font-size:15.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+"; float:right; color:var(--saffron); font-weight:800}
+  details[open] summary::after{content:"–"}
+  details p{margin:12px 0 0; color:var(--muted); font-size:14.5px}
+
+  /* ---------- contact ---------- */
+  .contact{display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:760px}
+  @media(max-width:760px){ .contact{grid-template-columns:1fr} }
+  .contact .card p{color:var(--ink); font-size:15px}
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--ink); color:#D9C9B5; padding:44px 0 32px;
+    padding-bottom:calc(32px + env(safe-area-inset-bottom,0px));
+  }
+  footer a{color:var(--peach); text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .foot{display:flex; gap:40px; flex-wrap:wrap; justify-content:space-between}
+  .foot h4{color:#fff; font-size:13px; letter-spacing:.8px; text-transform:uppercase; margin:0 0 10px}
+  .foot ul{list-style:none; padding:0; margin:0; font-size:14.5px}
+  .foot li{margin-bottom:7px}
+  .fine{margin-top:30px; padding-top:18px; border-top:1px solid #45342A; font-size:13px; color:#9C8977}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <img src="assets/icon.png" alt="" />
+    <strong>Daily Expense Tracker</strong>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <span class="eyebrow">Free on Google Play</span>
+      <h1>Know where your money <span class="hl">actually</span> goes.</h1>
+      <p class="sub">
+        Most expense apps die the week you stop typing into them. This one reads the
+        payment notifications your bank and UPI apps already send, so your spending
+        logs itself.
+      </p>
+      <div class="cta">
+        <a class="btn" href="https://play.google.com/store/apps/details?id=in.dailyexpensetracker.app">
+          Get it on Google Play
+        </a>
+        <a class="btn ghost" href="#features">See what it does</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="blob"></div>
+      <img src="assets/buddha.png" alt="The app's calm mascot, relaxing" />
+    </div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <span>Auto-logs from notifications</span>
+    <span>Split bills with friends</span>
+    <span>Works in 100+ countries</span>
+    <span>Your data stays on your phone</span>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <p class="lede">
+      The point is to stop you doing data entry. Everything else follows from that.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <span class="ico">🔔</span>
+        <h3>Spending logs itself</h3>
+        <p>Reads transaction notifications from banking and UPI apps and turns them
+           into categorised entries. You confirm, you don't type.</p>
+        <span class="tag">India only, for now</span>
+      </div>
+      <div class="card">
+        <span class="ico">📸</span>
+        <h3>Scan a receipt</h3>
+        <p>Point the camera at a bill or drop in a payment screenshot and the amount
+           is pulled out for you.</p>
+        <span class="tag">India only, for now</span>
+      </div>
+      <div class="card">
+        <span class="ico">✍️</span>
+        <h3>Or just add it</h3>
+        <p>Manual entry is two taps, with your own categories and notes. Available
+           everywhere the app is.</p>
+      </div>
+      <div class="card">
+        <span class="ico">👥</span>
+        <h3>Splits that settle</h3>
+        <p>Share a dinner, a trip or a flat. Everyone sees the same running total,
+           with a chat attached so the argument stays in one place.</p>
+      </div>
+      <div class="card">
+        <span class="ico">📊</span>
+        <h3>Charts worth opening</h3>
+        <p>Where the month went, by category and over time, with budgets that warn
+           you before you blow them rather than after.</p>
+      </div>
+      <div class="card">
+        <span class="ico">🔒</span>
+        <h3>Stays on your phone</h3>
+        <p>Personal transactions live in local storage on your device. Only shared
+           splits and your account details reach our servers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <p class="lede">
+      The app is free and stays useful free. Premium removes the ads and lifts the limits.
+    </p>
+    <div class="plans">
+      <div class="plan">
+        <h3 style="margin:0">Free</h3>
+        <div class="price">₹0</div>
+        <ul>
+          <li>Unlimited personal expenses</li>
+          <li>Automatic tracking and receipt scanning</li>
+          <li>Budgets and monthly charts</li>
+          <li>Up to 5 bill splits</li>
+          <li class="off">Shows ads</li>
+          <li class="off">Weekly and yearly analytics locked</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <span class="badge">Premium</span>
+        <h3 style="margin:0">Premium</h3>
+        <div class="price">₹10 <small>/ month</small></div>
+        <ul>
+          <li>Everything in Free</li>
+          <li>No ads, anywhere</li>
+          <li>Unlimited group splits</li>
+          <li>Every chart: weekly, yearly, drill-downs</li>
+          <li>Import bank statements</li>
+          <li>PDF reports without watching an ad</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">
+      ₹10 per month is the price in India. Outside India the price is set in your own
+      currency and shown in the app before you buy. Premium is an auto-renewing
+      subscription billed through Google Play, and you can cancel any time from
+      Play Store → Subscriptions. See the
+      <a href="refund_policy.html">refund &amp; cancellation policy</a>.
+    </p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions people actually ask</h2>
+    <p class="lede">The short answers.</p>
+
+    <details>
+      <summary>How does it read my transactions?</summary>
+      <p>With your permission, the app reads the notifications your banking and UPI
+         apps post to your phone and picks out the amount and merchant. It does not
+         read your SMS, and it never connects to your bank account. This feature is
+         available in India today; elsewhere it is marked "coming soon" and you add
+         expenses manually.</p>
+    </details>
+
+    <details>
+      <summary>Where is my data stored?</summary>
+      <p>Your personal transactions are kept in local storage on your phone. Your
+         account details and any splits you share with other people are stored on our
+         servers so the other people in the split can see them. Full detail is in the
+         <a href="privacy_policy.html">privacy policy</a>.</p>
+    </details>
+
+    <details>
+      <summary>Do I have to pay?</summary>
+      <p>No. The free tier tracks unlimited personal expenses. Premium removes ads
+         and lifts the limits on splits, analytics and statement import.</p>
+    </details>
+
+    <details>
+      <summary>How do I cancel Premium?</summary>
+      <p>Open the Play Store app → tap your profile → Payments &amp; subscriptions →
+         Subscriptions → Daily Expense Tracker → Cancel. You keep Premium until the
+         end of the period you already paid for.</p>
+    </details>
+
+    <details>
+      <summary>Which countries is the app available in?</summary>
+      <p>Over 100 countries, with prices set in the local currency. Automatic
+         notification tracking and receipt scanning are currently India-only;
+         everything else works everywhere.</p>
+    </details>
+
+    <details>
+      <summary>Is there an iPhone version?</summary>
+      <p>Not today. The app is Android only.</p>
+    </details>
+  </div>
+</section>
+
+<section id="contact" style="background:var(--paper); border-top:1px solid var(--line)">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="lede">A real person reads these. Expect a reply within two business days.</p>
+    <div class="contact">
+      <div class="card">
+        <span class="ico">✉️</span>
+        <h3>Support &amp; billing</h3>
+        <p><a href="mailto:automationbuddy1k@gmail.com">automationbuddy1k@gmail.com</a></p>
+      </div>
+      <div class="card">
+        <span class="ico">🐞</span>
+        <h3>Bug or feature request</h3>
+        <p>Same address — include your phone model and what you were doing when it
+           went wrong.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <h4>Daily Expense Tracker</h4>
+        <ul>
+          <li>An Android app for tracking what you spend.</li>
+          <li><code style="color:#9C8977">in.dailyexpensetracker.app</code></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=in.dailyexpensetracker.app">Google Play</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy_policy.html">Privacy policy</a></li>
+          <li><a href="terms_and_conditions.html">Terms &amp; conditions</a></li>
+          <li><a href="refund_policy.html">Refunds &amp; cancellation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:automationbuddy1k@gmail.com">automationbuddy1k@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">
+      © 2026 Daily Expense Tracker. Google Play and the Google Play logo are
+      trademarks of Google LLC.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
