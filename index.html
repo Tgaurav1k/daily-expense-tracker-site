@@ -125,7 +125,7 @@ a{color:inherit}
 .rail__btn:disabled{opacity:.34; cursor:default}
 .rail__btn svg{width:17px; height:17px; stroke:currentColor; fill:none;
   stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
-@media(max-width:700px){ .rail__nav{display:none} }
+@media(max-width:700px){ #railPrev,#railNext{display:none} }
 
 .rail__scroll{display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
   padding:6px 24px 24px; margin:0 -24px; scroll-behavior:smooth;
@@ -302,6 +302,9 @@ a{color:inherit}
         <p>Five things the app does that you do not have to.</p>
       </div>
       <div class="rail__nav">
+        <button class="rail__btn" id="railPlay" type="button" aria-label="Pause the screenshot carousel">
+          <svg viewBox="0 0 24 24" id="railPlayIcon"><path d="M10 5v14"/><path d="M15 5v14"/></svg>
+        </button>
         <button class="rail__btn" id="railPrev" type="button" aria-label="Previous screenshots">
           <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -527,24 +530,62 @@ a{color:inherit}
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // screenshot rail arrows
+  // screenshot carousel: autoplay, loop, pause control
   var rail = document.getElementById('rail'),
       prev = document.getElementById('railPrev'),
-      next = document.getElementById('railNext');
-  if (rail && prev && next) {
+      next = document.getElementById('railNext'),
+      play = document.getElementById('railPlay'),
+      icon = document.getElementById('railPlayIcon');
+
+  if (rail && prev && next && play) {
+    var ICON_PAUSE = '<path d="M10 5v14"/><path d="M15 5v14"/>',
+        ICON_PLAY  = '<path d="M7 4l12 8-12 8z"/>',
+        DELAY = 3600, timer = null, playing = false, resumeAt = 0;
+
     function step(){
       var card = rail.querySelector('.shot');
       return card ? card.getBoundingClientRect().width + 18 : 280;
     }
+    function atEnd(){ return rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 8; }
     function sync(){
       prev.disabled = rail.scrollLeft < 8;
-      next.disabled = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 8;
+      next.disabled = atEnd() && !playing;
     }
-    prev.addEventListener('click', function(){ rail.scrollBy({left:-step()*2, behavior: reduce?'auto':'smooth'}); });
-    next.addEventListener('click', function(){ rail.scrollBy({left: step()*2, behavior: reduce?'auto':'smooth'}); });
+    function advance(){
+      if (atEnd()) rail.scrollTo({left:0, behavior:'smooth'});
+      else rail.scrollBy({left:step(), behavior:'smooth'});
+    }
+    function start(){
+      if (playing) return;
+      playing = true; timer = setInterval(function(){
+        if (Date.now() < resumeAt) return;      // user just interacted
+        if (document.hidden) return;             // tab in background
+        advance();
+      }, DELAY);
+      icon.innerHTML = ICON_PAUSE;
+      play.setAttribute('aria-label','Pause the screenshot carousel');
+      sync();
+    }
+    function stop(){
+      playing = false; clearInterval(timer); timer = null;
+      icon.innerHTML = ICON_PLAY;
+      play.setAttribute('aria-label','Play the screenshot carousel');
+      sync();
+    }
+    function nudge(){ resumeAt = Date.now() + 6000; }   // hold off after manual use
+
+    play.addEventListener('click', function(){ playing ? stop() : start(); });
+    prev.addEventListener('click', function(){ nudge(); rail.scrollBy({left:-step(), behavior: reduce?'auto':'smooth'}); });
+    next.addEventListener('click', function(){ nudge(); advance(); });
     rail.addEventListener('scroll', sync, {passive:true});
+    rail.addEventListener('pointerdown', nudge, {passive:true});
+    rail.addEventListener('wheel', nudge, {passive:true});
+    rail.addEventListener('mouseenter', nudge);
+    rail.addEventListener('focusin', nudge);
     window.addEventListener('resize', sync);
+
     sync();
+    if (!reduce) start(); else stop();
   }
 
   // reveal on scroll
