@@ -67,7 +67,14 @@ a{color:inherit}
   .nav__wm b{font-size:16px}
   .nav__links .nav__btn{padding:12px 18px; font-size:14px}
 }
-@media(max-width:400px){ .nav__wm i{display:none} }
+@media(max-width:470px){
+    .nav__wm i{display:none}
+    .nav__wm b{font-size:15px; letter-spacing:-.45px}
+    .nav__brand img{height:34px}
+    .nav__in{gap:10px}
+    .nav__links .nav__btn{padding:11px 15px; font-size:13.5px}
+  }
+  @media(max-width:360px){ .nav__wm{display:none} }
 
 /* ── hero ── */
 .hero{position:relative; overflow:hidden;
@@ -108,7 +115,7 @@ a{color:inherit}
   .hero__sub{margin-left:auto; margin-right:auto}
   .hero__cta{justify-content:center}
   .hero__art{order:-1}
-  .hero__art img{width:min(290px,76%)}
+  .hero__art img{width:min(205px,56%)}
 }
 
 /* ── screenshot rail ── */
@@ -156,7 +163,8 @@ a{color:inherit}
 
 /* how it works */
 .hiw{display:grid; grid-template-columns:1.25fr 1fr; gap:18px; margin-bottom:18px}
-.hiw__card{position:relative; background:var(--white); border:1px solid var(--line);
+.hiw__card{position:relative; display:flex; flex-direction:column;
+  background:var(--white); border:1px solid var(--line);
   border-radius:20px; padding:30px 28px; overflow:hidden;
   transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease, border-color .22s ease;
   box-shadow:var(--sh-sm)}
@@ -166,12 +174,12 @@ a{color:inherit}
   display:block; margin-bottom:12px}
 .hiw__card h3{font-size:21px; font-weight:800; letter-spacing:-.5px; margin:0 0 9px; color:var(--ink)}
 .hiw__card p{margin:0; color:var(--muted); font-size:15px; max-width:34em}
-.hiw__tag{display:inline-block; margin-top:16px; font-size:10.5px; font-weight:700;
+.hiw__tag{display:inline-block; align-self:flex-start; margin-top:auto; padding-top:0; font-size:10.5px; font-weight:700;
   letter-spacing:.7px; text-transform:uppercase; padding:5px 11px; border-radius:6px;
   background:var(--cream); color:var(--muted); border:1px solid var(--line)}
 
 /* the live loop inside card 01 */
-.loop{margin-top:22px; height:112px; position:relative}
+.loop{margin-top:22px; margin-bottom:18px; height:112px; position:relative}
 .loop__row{position:absolute; left:0; right:0; display:flex; align-items:center; gap:11px;
   background:var(--cream-lt); border:1px solid var(--line); border-radius:12px; padding:11px 14px}
 .loop__row--note{top:0; animation:noteIn 5.2s ease-in-out infinite}
@@ -244,7 +252,8 @@ a{color:inherit}
 .plan--pro .plan__btn{background:#fff; color:var(--violet-dk)}
 .plan__btn:hover{transform:translateY(-2px)}
 .fineprint{margin-top:26px; font-size:13.5px; color:var(--muted); max-width:46em}
-.fineprint a{color:var(--violet-dk); font-weight:700}
+.fineprint a{color:var(--violet-dk); font-weight:700;
+  display:inline-block; padding:2px 0; min-height:24px}
 @media(max-width:760px){ .plans{grid-template-columns:1fr} }
 
 /* ── faq ── */
@@ -277,8 +286,9 @@ a{color:inherit}
 .foot h4{color:#fff; font-size:12px; font-weight:700; letter-spacing:1.2px;
   text-transform:uppercase; margin:0 0 14px}
 .foot ul{list-style:none; padding:0; margin:0; font-size:14.5px}
-.foot li{margin-bottom:9px}
-.foot a{color:rgba(255,255,255,.64); text-decoration:none}
+.foot li{margin-bottom:3px}
+.foot a{color:rgba(255,255,255,.64); text-decoration:none;
+  display:inline-block; padding:4px 0; min-height:24px}
 .foot a:hover{color:#fff}
 .foot__end{margin-top:40px; padding-top:22px; border-top:1px solid rgba(255,255,255,.13);
   font-size:13px; color:rgba(255,255,255,.44)}
