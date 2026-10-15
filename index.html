@@ -74,7 +74,17 @@ a{color:inherit}
   background:
     radial-gradient(760px 380px at 50% -10%, var(--violet-100), transparent 66%),
     linear-gradient(180deg,#FAF5EC,var(--cream) 70%);
-  padding:84px 0 68px}
+  padding:58px 0 68px}
+.hero__mascot{position:relative; display:block; width:fit-content;
+  margin:0 auto 10px}
+.hero__mascot img{height:168px; width:auto; position:relative; z-index:2;
+  filter:drop-shadow(0 14px 26px rgba(28,26,36,.16))}
+.hero__mascot::before{content:""; position:absolute; left:50%; top:52%;
+  width:230px; height:230px; transform:translate(-50%,-50%);
+  background:radial-gradient(circle,var(--violet-100),transparent 68%);
+  border-radius:50%; z-index:1}
+@media(max-width:700px){ .hero__mascot img{height:124px} .hero__mascot::before{width:172px; height:172px} }
+
 .pill{display:inline-flex; align-items:center; gap:9px; background:var(--white);
   border:1px solid var(--line); color:var(--ink); font-size:13px; font-weight:600;
   padding:7px 16px 7px 8px; border-radius:999px; margin-bottom:26px; box-shadow:var(--sh-sm)}
@@ -236,6 +246,7 @@ a{color:inherit}
 
 <section class="hero">
   <div class="shell">
+    <span class="hero__mascot"><img src="assets/hero-buddha.png" alt="" /></span>
     <span class="pill"><b>FREE</b> On Google Play, no card needed</span>
     <h1>Your phone already knows <em>what you spent.</em></h1>
     <p class="hero__sub">
